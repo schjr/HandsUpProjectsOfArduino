@@ -3,6 +3,28 @@ class Module
   public:
   virtual void initial();
 };
+class laser
+{
+  public:
+  laser(int pin);
+  void openIt();
+  void closeIt();
+  private:
+  int m_pin;
+};
+laser::laser(int pin)
+{
+  m_pin = pin;
+  digitalWrite(m_pin,LOW);
+}
+void laser::openIt()
+{
+  digitalWrite(m_pin,HIGH);
+}
+void laser::closeIt()
+{
+  digitalWrite(m_pin,LOW);
+}
 class Ultrasound:public Module
 {
   public:
@@ -131,6 +153,7 @@ void DigitalLight::showNum(int num)
 }
 DigitalLight l1(2,3,4,5,6,7,8,9);
 Ultrasound u1(11,12);
+laser la1(10);
 void setup() {
   // put your setup code here, to run once:
   u1.initial();
@@ -138,6 +161,7 @@ void setup() {
 }
 
 void loop() {
+  la1.openIt();
   Serial.println(u1.getDist());
   int numshow = u1.getDist()/10;
   l1.showNum(numshow);
